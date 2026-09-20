@@ -1,0 +1,18 @@
+{
+  "description": "Inject the next features.md job at session start.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/scripts/session-start-jobs.cjs\"",
+            "timeout": 15,
+            "statusMessage": "Loading next features.md job",
+            "additionalContextLimit": 2000
+          }
+        ]
+      }
+    ]
+  }
+}

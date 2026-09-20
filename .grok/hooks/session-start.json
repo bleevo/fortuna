@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${GROK_WORKSPACE_ROOT}/scripts/session-start-jobs.cjs\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
