@@ -14,7 +14,7 @@ Statuses: `queued` · `in progress` · `done`
 
 [ queued ] - example: show RATES_AS_OF as plain text in the header (from rates.ts, not hardcoded). Do not implement unless asked.
 
-[ queued ] - add support for https://github.com/shadcn-ui/lint
+[ done ] - add support for https://github.com/shadcn-ui/lint
 [ queued ] - break the site up into tabs starting with the following tabs, overview (high level stats annual pension/spendable year/assessible assets/liquid at end), pension detail, profile (Person & horizon card atm), home, expenses, portfolio, year by year, sources
 [ queued ] - add a new tab called scenarios: list saved scenarios, save current as a named save, load another save, delete a save
 [ queued ] - change age to use birth month/year instead of age, default it to 4/1943
