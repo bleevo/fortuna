@@ -10,6 +10,7 @@ import { OverviewTab } from '@/components/tabs/OverviewTab'
 import { PensionDetailTab } from '@/components/tabs/PensionDetailTab'
 import { PortfolioTab } from '@/components/tabs/PortfolioTab'
 import { ProfileTab } from '@/components/tabs/ProfileTab'
+import { ScenariosTab } from '@/components/tabs/ScenariosTab'
 import { YearByYearTab } from '@/components/tabs/YearByYearTab'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -29,6 +30,7 @@ const TABS = [
   'expenses',
   'portfolio',
   'year-by-year',
+  'scenarios',
   'sources',
 ] as const
 
@@ -42,6 +44,7 @@ const TAB_LABELS: Record<TabId, string> = {
   expenses: 'Expenses',
   portfolio: 'Portfolio',
   'year-by-year': 'Year by year',
+  scenarios: 'Scenarios',
   sources: 'Sources',
 }
 
@@ -174,6 +177,10 @@ export default function App() {
 
         <TabsContent value="year-by-year">
           <YearByYearTab result={result} />
+        </TabsContent>
+
+        <TabsContent value="scenarios">
+          <ScenariosTab inputs={inputs} setInputs={setInputs} />
         </TabsContent>
 
         <TabsContent value="sources">
