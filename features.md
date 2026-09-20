@@ -14,6 +14,8 @@ Statuses: `queued` · `in progress` · `done`
 
 [ queued ] - example: show RATES_AS_OF as plain text in the header (from rates.ts, not hardcoded). Do not implement unless asked.
 
+[ done ] - default assets to $1.6m cash + $25k super + $600k home value; the scenario is working out how much to put into the house, expenses and investments
+
 [ done ] - default assets to 1.5 + 600k all cash
 
 [ done ] - add support for https://github.com/shadcn-ui/lint

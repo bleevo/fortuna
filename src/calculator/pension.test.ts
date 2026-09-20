@@ -100,8 +100,24 @@ describe('scenario projection', () => {
   it('produces a timeline and summary for defaults', () => {
     const result = calculateScenario(defaultScenario)
     expect(result.timeline.length).toBe(defaultScenario.endAge - defaultScenario.age + 1)
-    expect(result.income.spendable).toBeGreaterThan(0)
+    expect(result.income.spendable).toBeGreaterThanOrEqual(0)
     expect(result.pension.payableAnnual).toBeGreaterThanOrEqual(0)
     expect(result.ratesAsOf.length).toBeGreaterThan(0)
+  })
+
+  it('starts with the defaults unallocated: home untouched, no pension', () => {
+    const result = calculateScenario(defaultScenario)
+    expect(result.portfolio.surplusToHome).toBe(0)
+    expect(result.portfolio.homeValue).toBe(defaultScenario.homeValue)
+    expect(result.portfolio.superValue).toBe(defaultScenario.superBalance)
+    // $1.6m of assessable cash is well past the single homeowner cutoff.
+    expect(result.pension.payableAnnual).toBe(0)
+  })
+
+  it('pays a pension once enough capital is moved into the home', () => {
+    const result = calculateScenario({ ...defaultScenario, assessableTarget: 500_000 })
+    expect(result.portfolio.surplusToHome).toBeGreaterThan(0)
+    expect(result.pension.payableAnnual).toBeGreaterThan(0)
+    expect(result.income.spendable).toBeGreaterThan(0)
   })
 })
