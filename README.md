@@ -21,14 +21,21 @@ Rates are centralised in `src/calculator/rates.ts` (currently **20 September 202
 - Tailwind CSS v4
 - Recharts
 - Vitest
-- Static build for **Cloudflare Workers** at [fortuna.compile.workers.dev](https://fortuna.compile.workers.dev/)
+- Static build for **Cloudflare Pages** at [fortuna.pages.dev](https://fortuna.pages.dev/)
 
-Pushes to `main` deploy production. Cloudflare Workers Builds settings:
+Pushes to `main` deploy production. Cloudflare Pages build settings (Settings → Build):
 
 - **Build command:** `npm run build`
-- **Deploy command:** `npx wrangler deploy`
-- **Output / assets directory:** `dist`
-- **Node.js:** 22
+- **Build output directory:** `dist`
+- **Deploy command:** leave empty — Pages publishes the output directory itself
+- **Node.js:** 22, from `.nvmrc`
+
+Pages is the only deploy target. Do not also point a Worker at this repo: a Pages build ignores
+Worker `assets` config, and a `wrangler deploy` deploy command stops the Pages project from ever
+publishing a deployment of its own.
+
+`public/_headers` sets security headers and `public/_redirects` sends unknown paths to
+`index.html`, so the app keeps working if it ever moves off hash-based tab links.
 
 ## Scripts
 
@@ -38,7 +45,7 @@ npm run dev      # local app
 npm test         # calculation unit tests
 npm run build    # static production build → dist/
 npm run preview  # preview dist/
-npm run deploy   # build and wrangler deploy (requires Wrangler login)
+npm run deploy   # build and wrangler pages deploy (requires Wrangler login)
 ```
 
 ## Lint

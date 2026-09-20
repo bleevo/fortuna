@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "npm run build && wrangler pages deploy",
     "prepare": "husky"
   },
   "dependencies": {
