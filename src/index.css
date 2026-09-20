@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+}
+
+@layer base {
+  :root {
+    --color-ink: #13211f;
+    --color-ink-muted: #3d4f4b;
+    --color-paper: #f3f6f4;
+    --color-paper-deep: #e4ebe7;
+    --color-panel: #ffffff;
+    --color-line: #c5d2cc;
+    --color-accent: #0f6b5c;
+    --color-accent-soft: #d7efe9;
+    --color-accent-deep: #0a4d42;
+    --color-warn: #9a3412;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #d9efe8 0%, transparent 55%),
+      radial-gradient(900px 500px at 100% 0%, #e8eef6 0%, transparent 50%),
+      linear-gradient(180deg, #f7faf8 0%, var(--color-paper) 40%, #eef3f0 100%);
+    line-height: 1.5;
+  }
+
+  * { box-sizing: border-box; }
+
+  :focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--color-accent) 70%, white);
+    outline-offset: 2px;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
