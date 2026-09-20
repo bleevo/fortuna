@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "pages:deploy": "npm run build && wrangler pages deploy dist --project-name=fortuna --branch=main"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",

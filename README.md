@@ -21,9 +21,14 @@ Rates are centralised in `src/calculator/rates.ts` (currently **20 September 202
 - Tailwind CSS v4
 - Recharts
 - Vitest
-- Static build for **Cloudflare Pages** at [fortuna.pages.dev](https://fortuna.pages.dev)
+- Static build for **Cloudflare Workers** at [fortuna.compile.workers.dev](https://fortuna.compile.workers.dev/)
 
-Pushes to `main` deploy production. Cloudflare Pages settings: build command `npm run build`, output directory `dist`, Node.js 22.
+Pushes to `main` deploy production. Cloudflare Workers Builds settings:
+
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
+- **Output / assets directory:** `dist`
+- **Node.js:** 22
 
 ## Scripts
 
@@ -32,8 +37,8 @@ npm install
 npm run dev      # local app
 npm test         # calculation unit tests
 npm run build    # static production build → dist/
-npm run preview        # preview dist/
-npm run pages:deploy   # build and upload dist/ to Pages (requires Wrangler login)
+npm run preview  # preview dist/
+npm run deploy   # build and wrangler deploy (requires Wrangler login)
 ```
 
 ## Tailwind lint
