@@ -1,11 +1,12 @@
 import type { ScenarioInputs } from '../calculator/types'
 
 export const STORAGE_KEY = 'fortuna.scenario.v1'
-export const SCHEMA_VERSION = 1
+export const SCHEMA_VERSION = 2
 
 export const defaultScenario: ScenarioInputs = {
   schemaVersion: SCHEMA_VERSION,
-  age: 80,
+  birthMonth: 4,
+  birthYear: 1943,
   endAge: 95,
   single: true,
   homeowner: true,

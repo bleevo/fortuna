@@ -9,6 +9,7 @@ import {
   annuityAssessableIncome,
 } from './annuity'
 import { assetsFullThreshold, indexThreshold } from './assetsTest'
+import { currentAge } from './age'
 import { incomeFreeAreaAnnual } from './incomeTest'
 import { modelGifting } from './gifting'
 import { applyModeAdjustments, money } from './helpers'
@@ -42,6 +43,7 @@ function bondCoupons(bondAllocation: number, inputs: ScenarioInputs): number {
 
 export function calculateScenario(raw: ScenarioInputs): CalculationResult {
   const inputs = applyModeAdjustments(raw)
+  const startAge = currentAge(inputs)
   const warnings: string[] = []
 
   const gifting = modelGifting(inputs.giftingYears)
@@ -95,8 +97,8 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
     annuityAssessableAsset: money(
       annuityAssessableAsset(
         annuityPurchase,
-        inputs.age,
-        inputs.age,
+        startAge,
+        startAge,
         inputs.annuityAssessableAssetStartPct,
         inputs.annuityAssessableAssetAfterPct,
       ),
@@ -117,7 +119,7 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
   const superValue = initialSuper
 
   const netVdcoGrowth = inputs.vdcoGrowthPct - inputs.vdcoFeePct
-  const years = Math.max(0, inputs.endAge - inputs.age)
+  const years = Math.max(0, inputs.endAge - startAge)
   const nonAnnuity = initialVdco + initialBond
   const expectedGrowthPct =
     nonAnnuity > 0 ? (initialVdco * netVdcoGrowth) / nonAnnuity : 0
@@ -147,7 +149,7 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
   })
 
   for (let i = 0; i <= years; i++) {
-    const age = inputs.age + i
+    const age = startAge + i
     const inAgedCare = agedCareActive(inputs, age)
 
     if (inputs.homeSaleAge != null && age === inputs.homeSaleAge && home > 0) {
@@ -168,7 +170,7 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
     const annuityAsset = annuityAssessableAsset(
       annuityPurchase,
       age,
-      inputs.age,
+      startAge,
       inputs.annuityAssessableAssetStartPct,
       inputs.annuityAssessableAssetAfterPct,
     )

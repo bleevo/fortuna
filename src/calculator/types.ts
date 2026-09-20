@@ -20,7 +20,9 @@ export type BondInputs = {
 
 export type ScenarioInputs = {
   schemaVersion: number
-  age: number
+  /** 1-12. */
+  birthMonth: number
+  birthYear: number
   endAge: number
   single: boolean
   homeowner: boolean

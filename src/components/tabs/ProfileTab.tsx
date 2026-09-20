@@ -1,7 +1,9 @@
+import { currentAge, MONTH_NAMES } from '@/calculator/age'
 import type { ScenarioInputs } from '@/calculator/types'
 import { NumberField } from '@/components/NumberField'
 import { Section } from '@/components/Section'
 import { Toggle } from '@/components/Toggle'
+import { Label } from '@/components/ui/label'
 import type { PatchInput } from '@/components/tabs/types'
 
 export function ProfileTab({
@@ -11,25 +13,43 @@ export function ProfileTab({
   inputs: ScenarioInputs
   patch: PatchInput
 }) {
+  const age = currentAge(inputs)
+
   return (
     <Section
       title="Person & horizon"
-      description="Starter scenario: single homeowner, age 80 to 95."
+      description={`Starter scenario: single homeowner, age ${age} to ${inputs.endAge}.`}
     >
       <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="birthMonth">Birth month</Label>
+          <select
+            id="birthMonth"
+            value={inputs.birthMonth}
+            onChange={(e) => patch('birthMonth', Number(e.target.value))}
+            className="w-full rounded-md border border-[var(--color-line)] bg-white px-3 py-2.5 text-[var(--color-ink)] shadow-sm"
+          >
+            {MONTH_NAMES.map((name, i) => (
+              <option key={name} value={i + 1}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
         <NumberField
-          id="age"
-          label="Current age"
-          value={inputs.age}
-          min={65}
-          max={100}
-          onChange={(v) => patch('age', v)}
+          id="birthYear"
+          label="Birth year"
+          value={inputs.birthYear}
+          min={1900}
+          max={new Date().getFullYear()}
+          onChange={(v) => patch('birthYear', v)}
+          help={`Currently ${age} years old.`}
         />
         <NumberField
           id="endAge"
           label="Planning end age"
           value={inputs.endAge}
-          min={inputs.age + 1}
+          min={age + 1}
           max={110}
           onChange={(v) => patch('endAge', v)}
         />

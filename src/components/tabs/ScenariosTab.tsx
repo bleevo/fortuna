@@ -1,3 +1,4 @@
+import { currentAge } from '@/calculator/age'
 import { useState } from 'react'
 import type { ScenarioInputs } from '@/calculator/types'
 import { Section } from '@/components/Section'
@@ -25,7 +26,7 @@ function formatSavedAt(iso: string): string {
 
 function summarise(inputs: ScenarioInputs): string {
   return [
-    `Age ${inputs.age}–${inputs.endAge}`,
+    `Age ${currentAge(inputs)}–${inputs.endAge}`,
     inputs.single ? 'Single' : 'Couple',
     inputs.homeowner ? 'Homeowner' : 'Non-homeowner',
     `${formatAUD(inputs.startingCash)} starting cash`,

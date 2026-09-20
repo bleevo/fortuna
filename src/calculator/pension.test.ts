@@ -1,3 +1,4 @@
+import { currentAge } from './age'
 import { describe, expect, it } from 'vitest'
 import {
   assetsCutoffFromThreshold,
@@ -121,7 +122,9 @@ describe('annuity / gifting / tax / run-to-zero helpers', () => {
 describe('scenario projection', () => {
   it('produces a timeline and summary for defaults', () => {
     const result = calculateScenario(defaultScenario)
-    expect(result.timeline.length).toBe(defaultScenario.endAge - defaultScenario.age + 1)
+    expect(result.timeline.length).toBe(
+      defaultScenario.endAge - currentAge(defaultScenario) + 1,
+    )
     expect(result.income.spendable).toBeGreaterThanOrEqual(0)
     expect(result.pension.payableAnnual).toBeGreaterThanOrEqual(0)
     expect(result.ratesAsOf.length).toBeGreaterThan(0)
