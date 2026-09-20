@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { assetsTestPensionAnnual, maxPensionAnnual } from './assetsTest'
+import {
+  assetsCutoffFromThreshold,
+  assetsTestPensionAnnual,
+  maxPensionAnnual,
+} from './assetsTest'
 import { deemedIncomeAnnual } from './deeming'
 import { modelGifting } from './gifting'
-import { incomeTestPensionAnnual } from './incomeTest'
+import { incomeCutoffAnnual, incomeTestPensionAnnual } from './incomeTest'
 import { calculatePension } from './pension'
 import { calculateScenario } from './projection'
 import { runToZeroDrawdown } from './runToZero'
@@ -15,6 +19,14 @@ describe('assets test', () => {
     const result = assetsTestPensionAnnual(333_000, true, true)
     expect(result.pensionAnnual).toBeCloseTo(max, 0)
     expect(result.reductionAnnual).toBe(0)
+  })
+
+  it('pays nothing at the derived cut-off', () => {
+    const cutoff = assetsCutoffFromThreshold(333_000, true)
+    // Published single homeowner cut-off is $745,750.
+    expect(cutoff).toBeGreaterThan(740_000)
+    expect(cutoff).toBeLessThan(750_000)
+    expect(assetsTestPensionAnnual(cutoff, true, true).pensionAnnual).toBeCloseTo(0, 0)
   })
 
   it('tapers at $3 per fortnight per $1000', () => {
@@ -39,6 +51,16 @@ describe('deeming & income test', () => {
     const result = incomeTestPensionAnnual(free + 10_000, true)
     expect(result.reductionAnnual).toBeCloseTo(5000, 0)
     expect(result.pensionAnnual).toBeCloseTo(max - 5000, 0)
+  })
+})
+
+describe('income cut-off', () => {
+  it('pays nothing at the cut-off, and moves with an indexed free area', () => {
+    const cutoff = incomeCutoffAnnual(true)
+    expect(incomeTestPensionAnnual(cutoff, true).pensionAnnual).toBeCloseTo(0, 0)
+    const indexed = incomeCutoffAnnual(true, 6_000)
+    expect(indexed).toBeGreaterThan(cutoff)
+    expect(incomeTestPensionAnnual(indexed, true, 6_000).pensionAnnual).toBeCloseTo(0, 0)
   })
 })
 
@@ -112,6 +134,18 @@ describe('scenario projection', () => {
     expect(result.portfolio.superValue).toBe(defaultScenario.superBalance)
     // $1.6m of assessable cash is well past the single homeowner cutoff.
     expect(result.pension.payableAnnual).toBe(0)
+  })
+
+  it('indexes the assets and income cut-offs forward year by year', () => {
+    const result = calculateScenario({ ...defaultScenario, thresholdIndexationPct: 2.5 })
+    const [first] = result.timeline
+    const last = result.timeline[result.timeline.length - 1]
+
+    expect(first.assetsCutoff).toBeGreaterThan(first.assetsThreshold)
+    expect(first.incomeCutoff).toBeGreaterThan(first.incomeFreeArea)
+    expect(last.assetsThreshold).toBeGreaterThan(first.assetsThreshold)
+    expect(last.assetsCutoff).toBeGreaterThan(first.assetsCutoff)
+    expect(last.incomeCutoff).toBeGreaterThan(first.incomeCutoff)
   })
 
   it('pays a pension once enough capital is moved into the home', () => {

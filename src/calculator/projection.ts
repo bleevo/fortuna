@@ -9,6 +9,7 @@ import {
   annuityAssessableIncome,
 } from './annuity'
 import { assetsFullThreshold, indexThreshold } from './assetsTest'
+import { incomeFreeAreaAnnual } from './incomeTest'
 import { modelGifting } from './gifting'
 import { applyModeAdjustments, money } from './helpers'
 import { calculatePension } from './pension'
@@ -196,6 +197,11 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
       inputs.thresholdIndexationPct,
       i,
     )
+    const incomeFreeArea = indexThreshold(
+      incomeFreeAreaAnnual(inputs.single),
+      inputs.thresholdIndexationPct,
+      i,
+    )
 
     const pension = calculatePension({
       assessableAssets: assessable,
@@ -206,6 +212,7 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
       homeowner:
         inputs.homeowner && !(inAgedCare && homeAssessableInAgedCare(inputs)),
       assetsThresholdOverride: threshold,
+      incomeFreeAreaOverride: incomeFreeArea,
     })
 
     let remainingDraw = Math.min(baseDrawdown, vdcoValue + bondValue)
@@ -244,9 +251,13 @@ export function calculateScenario(raw: ScenarioInputs): CalculationResult {
       age,
       yearIndex: i,
       assetsThreshold: money(threshold),
+      assetsCutoff: money(pension.assetsCutoff),
+      incomeFreeArea: money(incomeFreeArea),
+      incomeCutoff: money(pension.incomeCutoffAnnual),
       assessableAssets: money(assessable),
       exemptAssets: money(exempt),
       deemedIncome: money(pension.deemedIncomeAnnual),
+      assessableIncome: money(pension.assessableIncomeAnnual),
       pension: money(pension.payableAnnual),
       vdcoDistributions: money(vdcoDistributions),
       bondCoupons: money(coupons),

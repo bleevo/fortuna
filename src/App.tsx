@@ -176,7 +176,7 @@ export default function App() {
         </TabsContent>
 
         <TabsContent value="year-by-year">
-          <YearByYearTab result={result} />
+          <YearByYearTab inputs={inputs} result={result} />
         </TabsContent>
 
         <TabsContent value="scenarios">

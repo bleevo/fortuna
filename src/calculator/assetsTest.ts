@@ -34,6 +34,15 @@ export function assetsCutoff(single: boolean, homeowner: boolean): number {
   return homeowner ? ASSETS_CUTOFF_COUPLE_HOMEOWNER : ASSETS_CUTOFF_COUPLE_NON_HOMEOWNER
 }
 
+/**
+ * Assets level at which the assets test pays nothing, derived from the same
+ * threshold and taper the projection uses so the two stay in step.
+ */
+export function assetsCutoffFromThreshold(threshold: number, single: boolean): number {
+  const taperAnnualPer1000 = ASSETS_TAPER_PER_1000_FORTNIGHTLY * FORTNIGHTS_PER_YEAR
+  return threshold + (maxPensionAnnual(single) * 1000) / taperAnnualPer1000
+}
+
 export function indexThreshold(base: number, ratePct: number, years: number): number {
   return base * (1 + ratePct / 100) ** years
 }

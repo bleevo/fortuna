@@ -82,6 +82,15 @@ export type PensionBreakdown = {
   deemedIncomeAnnual: number
   assessableAssets: number
   exemptAssets: number
+  assessableIncomeAnnual: number
+  /** Assets you can hold and still draw the full pension. */
+  assetsThreshold: number
+  /** Assets at which the assets test pays nothing. */
+  assetsCutoff: number
+  /** Annual assessable income you can have and still draw the full pension. */
+  incomeFreeAreaAnnual: number
+  /** Annual assessable income at which the income test pays nothing. */
+  incomeCutoffAnnual: number
 }
 
 export type PortfolioSnapshot = {
@@ -116,10 +125,18 @@ export type IncomeSnapshot = {
 export type YearRow = {
   age: number
   yearIndex: number
+  /** Full-pension assets threshold, indexed to this year. */
   assetsThreshold: number
+  /** Assets cut-off, indexed to this year. */
+  assetsCutoff: number
+  /** Full-pension income free area for the year, indexed and annualised. */
+  incomeFreeArea: number
+  /** Income cut-off for the year, indexed and annualised. */
+  incomeCutoff: number
   assessableAssets: number
   exemptAssets: number
   deemedIncome: number
+  assessableIncome: number
   pension: number
   vdcoDistributions: number
   bondCoupons: number

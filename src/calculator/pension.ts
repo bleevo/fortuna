@@ -1,6 +1,10 @@
 import { FORTNIGHTS_PER_YEAR } from './rates'
-import { assetsTestPensionAnnual, maxPensionAnnual } from './assetsTest'
-import { incomeTestPensionAnnual } from './incomeTest'
+import {
+  assetsCutoffFromThreshold,
+  assetsTestPensionAnnual,
+  maxPensionAnnual,
+} from './assetsTest'
+import { incomeCutoffAnnual, incomeTestPensionAnnual } from './incomeTest'
 import { deemedIncomeAnnual } from './deeming'
 import type { PensionBreakdown } from './types'
 
@@ -12,6 +16,7 @@ export function calculatePension(args: {
   single: boolean
   homeowner: boolean
   assetsThresholdOverride?: number
+  incomeFreeAreaOverride?: number
 }): PensionBreakdown {
   const maxAnnual = maxPensionAnnual(args.single)
   const deemed = deemedIncomeAnnual(args.financialAssetsForDeeming, args.single)
@@ -23,7 +28,11 @@ export function calculatePension(args: {
     args.homeowner,
     args.assetsThresholdOverride,
   )
-  const income = incomeTestPensionAnnual(assessableIncome, args.single)
+  const income = incomeTestPensionAnnual(
+    assessableIncome,
+    args.single,
+    args.incomeFreeAreaOverride,
+  )
   const payableAnnual = Math.min(assets.pensionAnnual, income.pensionAnnual)
 
   let bindingTest: PensionBreakdown['bindingTest'] = 'maximum'
@@ -43,5 +52,10 @@ export function calculatePension(args: {
     deemedIncomeAnnual: deemed,
     assessableAssets: args.assessableAssets,
     exemptAssets: args.exemptAssets,
+    assessableIncomeAnnual: assessableIncome,
+    assetsThreshold: assets.threshold,
+    assetsCutoff: assetsCutoffFromThreshold(assets.threshold, args.single),
+    incomeFreeAreaAnnual: income.freeAreaAnnual,
+    incomeCutoffAnnual: incomeCutoffAnnual(args.single, income.freeAreaAnnual),
   }
 }
