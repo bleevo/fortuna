@@ -1,8 +1,19 @@
-import { RATE_FIGURES, RATES_AS_OF, type RateFigure } from '@/calculator/rates'
+import {
+  DOWNSIZER_MAX_PER_PERSON,
+  RATE_FIGURES,
+  RATES_AS_OF,
+  type RateFigure,
+} from '@/calculator/rates'
 import { SOURCES, type SourceId } from '@/calculator/sources'
 import { SourceRef } from '@/components/SourceRef'
 import { Card } from '@/components/ui/card'
 import { formatAUD, formatPct } from '@/lib/utils'
+
+/** Sources cited in the notes below the figures table. */
+const NOTE_SOURCE_IDS: SourceId[] = [
+  'ato-contribution-restrictions',
+  'ato-downsizer',
+]
 
 function formatFigure(figure: RateFigure): string {
   switch (figure.format) {
@@ -21,7 +32,7 @@ function formatFigure(figure: RateFigure): string {
 
 export function RatesReferencePanel() {
   const uniqueSourceIds = [
-    ...new Set(RATE_FIGURES.map((f) => f.sourceId)),
+    ...new Set([...RATE_FIGURES.map((f) => f.sourceId), ...NOTE_SOURCE_IDS]),
   ] as SourceId[]
 
   return (
@@ -73,6 +84,44 @@ export function RatesReferencePanel() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-ink-muted)]">
+          Super contributions after age 75
+        </h3>
+        <p className="mt-2 text-sm text-[var(--color-ink-muted)]">
+          Once you turn 75, a fund can only accept a narrow set of
+          contributions, so topping super up is largely off the table.{' '}
+          <SourceRef sourceId="ato-contribution-restrictions" />
+        </p>
+        <ul className="mt-3 space-y-2 text-sm text-[var(--color-ink)]">
+          <li>
+            <strong>Always accepted:</strong> compulsory employer contributions
+            (super guarantee, award or trust-deed contributions) and downsizer
+            contributions — up to {formatAUD(DOWNSIZER_MAX_PER_PERSON)} per
+            person from the sale of a qualifying home, with no upper age limit
+            and no work test. <SourceRef sourceId="ato-downsizer" />
+          </li>
+          <li>
+            <strong>
+              Cut off 28 days after the end of the month you turn 75:
+            </strong>{' '}
+            personal contributions, spouse contributions and salary sacrifice.
+            Past that window the fund has to return them.
+          </li>
+          <li>
+            <strong>Before 75:</strong> every contribution type is accepted,
+            though claiming a deduction for a personal contribution between 67
+            and 74 needs the work test — 40 hours of gainful employment in a
+            consecutive 30-day period that financial year — or the one-off work
+            test exemption.
+          </li>
+        </ul>
+        <p className="mt-3 text-xs text-[var(--color-ink-muted)]">
+          Practical effect here: past 75, spare money stays outside super
+          unless it arrives as a downsizer contribution.
+        </p>
       </div>
 
       <div>

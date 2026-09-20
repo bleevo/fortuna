@@ -13,6 +13,7 @@ export type SourceId =
   | 'ato-tax-rates'
   | 'ato-sapto'
   | 'ato-downsizer'
+  | 'ato-contribution-restrictions'
 
 export type SourceRefData = {
   id: SourceId
@@ -87,6 +88,14 @@ export const SOURCES: Record<SourceId, SourceRefData> = {
     url: 'https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-employers/super/growing-and-using-your-super/contribution-caps/downsizer-contributions',
     asOf: 'Current',
     note: 'Maximum downsizer contribution per person.',
+  },
+  'ato-contribution-restrictions': {
+    id: 'ato-contribution-restrictions',
+    title: 'Restrictions on voluntary contributions',
+    publisher: 'Australian Taxation Office',
+    url: 'https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/growing-and-keeping-track-of-your-super/caps-limits-and-tax-on-super-contributions/restrictions-on-voluntary-contributions',
+    asOf: '24 July 2025',
+    note: 'What a super fund can still accept once you turn 75.',
   },
 }
 
