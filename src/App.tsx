@@ -209,9 +209,8 @@ export default function App() {
       ) : null}
 
       <footer className="mt-10 border-t border-[var(--color-line)] pt-6 text-sm text-[var(--color-ink-muted)]">
-        Fortuna stores scenarios only in this browser. Built for Cloudflare Pages
-        static hosting. Rates as of {result.ratesAsOf}. Official figures are
-        linked via the{' '}
+        Fortuna stores scenarios only in this browser. Rates as of{' '}
+        {result.ratesAsOf}. Official figures are linked via the{' '}
         <SourceRef sourceId="sa-age-pension-rates" variant="inline" /> chips on
         each tab.
       </footer>

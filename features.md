@@ -18,7 +18,7 @@ Statuses: `queued` · `in progress` · `done`
 
 [ done ] - cut the AI-slop header blurb in App.tsx down to a plain one-liner; drop the "Look for the SOURCE chip" explainer from the header (it already lives in the rates panel)
 
-[ queued ] - remove "Built for Cloudflare Pages static hosting." from the App.tsx footer
+[ done ] - remove "Built for Cloudflare Pages static hosting." from the App.tsx footer
 
 [ done ] - default assets to $1.6m cash + $25k super + $600k home value; the scenario is working out how much to put into the house, expenses and investments
 
