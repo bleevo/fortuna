@@ -106,11 +106,7 @@ export default function App() {
               Australian retirement income &amp; Age Pension planner
             </h1>
             <p className="mt-3 max-w-2xl text-lg text-[var(--color-ink-muted)]">
-              Private, browser-only modelling for Age Pension, VDCO, government
-              bonds, lifetime annuity, housing and drawdown choices. Rates as of{' '}
-              {RATES_AS_OF}. Look for the{' '}
-              <SourceRef sourceId="sa-age-pension-rates" /> chip next to
-              published figures — each links to the official source.
+              Private, browser-only modelling. Rates as of {RATES_AS_OF}.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button

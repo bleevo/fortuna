@@ -16,7 +16,7 @@ Statuses: `queued` · `in progress` · `done`
 
 [ done ] - year by year should include the projected income and assets cut-offs (indexed forward, alongside the existing full-pension assets threshold)
 
-[ queued ] - cut the AI-slop header blurb in App.tsx down to a plain one-liner; drop the "Look for the SOURCE chip" explainer from the header (it already lives in the rates panel)
+[ done ] - cut the AI-slop header blurb in App.tsx down to a plain one-liner; drop the "Look for the SOURCE chip" explainer from the header (it already lives in the rates panel)
 
 [ queued ] - remove "Built for Cloudflare Pages static hosting." from the App.tsx footer
 
