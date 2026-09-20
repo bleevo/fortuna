@@ -25,7 +25,7 @@ At the start of a session, unless the user gave a different explicit task:
 5. Flip the chosen job to `[ in progress ]` before changing product code.
 6. Implement only that job.
 7. Flip it to `[ done ]`.
-8. Create exactly one git commit for that job (see Commit rules).
+8. Create exactly one git commit for that job, then push it (see Commit rules).
 
 Do not start a second queued job in the same session unless the user asks.
 
@@ -34,8 +34,8 @@ Do not start a second queued job in the same session unless the user asks.
 - One `features.md` job → one commit. That commit includes the status edit in `features.md` and the code for that job. Leave no leftover uncommitted job work.
 - Do not mix unrelated changes into that commit.
 - Write the message with a HEREDOC. First line is an imperative summary of the job (50–72 characters). Optional body explains why, not a file list.
-- Never `git commit --amend` unless the user asked and the commit has not been pushed.
-- Never `git push` unless the user asked.
+- Push the job commit to `origin` on the current branch as soon as it is made.
+- Never `git commit --amend` a pushed commit. Job commits are pushed immediately, so treat them as final and fix mistakes with a follow-up commit.
 - Never `git commit --no-verify`. Husky pre-commit runs `npm run build`; if the build fails, fix it and commit again.
 - Do not commit secrets, `.env`, or `node_modules`.
 - If there is nothing to commit, do not create an empty commit.
